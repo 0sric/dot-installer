@@ -9,104 +9,87 @@ log() {
 
 # System update
 log "Starting system update..."
-sudo pacman -Syy
-sudo pacman -Syu
+sudo pacman -Syu --noconfirm
 log "System updated. Proceeding..."
 
 # Install yay
 if ! command -v yay &>/dev/null; then
     log "yay is not installed. Downloading and installing..."
     git clone https://aur.archlinux.org/yay.git
-    cd yay
+    cd yay || exit
     makepkg -si --noconfirm
-    cd ..
+    cd - || exit
     log "yay has been installed!"
 else
     log "yay is already installed!"
 fi
 
 # Install neofetch
-yay -S neofetch
+yay -S neofetch --noconfirm
 
-
-# ------------------------------------
-# download polybar
-
-
+# Install Polybar
+log "Downloading and installing Polybar..."
 git clone https://github.com/polybar/polybar
-cd polybar
+cd polybar || exit
 mkdir build
-cd build
+cd build || exit
 cmake ..
 make -j$(nproc)
 sudo make install
 log "Polybar installed from GitHub repo."
 
-# ------------------------------------
-#download rofi
-
+# Install Rofi
+log "Downloading and installing Rofi..."
 git clone https://github.com/davatorium/rofi.git
-cd rofi
+cd rofi || exit
 autoreconf -i
 mkdir build
-cd build
+cd build || exit
 ../configure
 make
 sudo make install
+log "Rofi installed from GitHub repo."
 
-Echo “Rofi installed from github repo”
-log() {
-    echo "$(date +"%H:%M:%S: Rofi installed….")”
-}
+# Install Spotify and Spicetify
+yay -S spotifyd --noconfirm
+log "Spotifyd installed from AUR."
 
-
-
-# Install spicetify and spotifyd
-yay -S spotifyd
-
-sudo chmod a+wr /usr/share/spotify
-sudo chmod a+wr /usr/share/spotify/Apps -R
-log "Spotify installed from AUR."
-
-yay -S spicetify-cli
-
+yay -S spicetify-cli --noconfirm
 spicetify apply
 log "Spicetify installed from AUR."
 
-
-# Install firefox and zathura
-sudo pacman -S firefox
+# Install Firefox
+sudo pacman -S firefox --noconfirm
 log "Firefox installed from official repositories."
 
-yay -S zathura
+# Install Zathura
+yay -S zathura --noconfirm
 log "Zathura installed from AUR."
 
-# Install fish shell
+# Install Fish shell
 if ! command -v fish &>/dev/null; then
-    log "fish is not installed. Downloading and installing..."
-    sudo pacman -S fish
+    log "Fish is not installed. Downloading and installing..."
+    sudo pacman -S fish --noconfirm
     log "Fish installed from official repositories."
 else
-    log "fish is already installed!"
+    log "Fish is already installed!"
 fi
 
-# Add more installations here...
-
-sudo pacman -S xxhash
-
-# Install kitty
+# Install Kitty
 if ! command -v kitty &>/dev/null; then
-    log "kitty is not installed. Downloading and installing..."
+    log "Kitty is not installed. Downloading and installing..."
     git clone https://aur.archlinux.org/kitty-git.git
-    cd kitty-git && makepkg -si --noconfirm
-    cd ..
-    log "kitty has been installed!"
+    cd kitty-git || exit
+    makepkg -si --noconfirm
+    cd - || exit
+    log "Kitty has been installed!"
 else
-    log "kitty is already installed!"
+    log "Kitty is already installed!"
 fi
 
+# Install Dolphin
 log "Dolphin is not installed. Downloading and installing..."
-sudo pacman -S dolphin
+sudo pacman -S dolphin --noconfirm
 log "Dolphin installed from official repositories."
 
 log "Installation script completed."
