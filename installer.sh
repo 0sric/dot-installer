@@ -92,6 +92,8 @@ fi
 
 # Add more installations here...
 
+sudo pacman -S xxhash
+
 # Install kitty
 if ! command -v kitty &>/dev/null; then
     log "kitty is not installed. Downloading and installing..."
