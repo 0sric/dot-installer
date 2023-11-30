@@ -25,14 +25,9 @@ else
     log "yay is already installed!"
 fi
 
-# Sleep for 20 seconds
-sleep 20
-
 # Install neofetch
 yay -S neofetch
 
-# Sleep for 15 seconds
-sleep 15
 
 # ------------------------------------
 # download polybar
@@ -46,8 +41,6 @@ cmake ..
 make -j$(nproc)
 sudo make install
 log "Polybar installed from GitHub repo."
-
-Sleep 25
 
 # ------------------------------------
 #download rofi
@@ -66,23 +59,20 @@ log() {
     echo "$(date +"%H:%M:%S: Rofi installed….")”
 }
 
-# Sleep for 25 seconds
-sleep 25
+
 
 # Install spicetify and spotifyd
 yay -S spotifyd
-sleep 140
+
 sudo chmod a+wr /usr/share/spotify
 sudo chmod a+wr /usr/share/spotify/Apps -R
 log "Spotify installed from AUR."
 
 yay -S spicetify-cli
-sleep 60
+
 spicetify apply
 log "Spicetify installed from AUR."
 
-# Sleep for 60 seconds
-sleep 60
 
 # Install firefox and zathura
 sudo pacman -S firefox
@@ -101,9 +91,6 @@ else
 fi
 
 # Add more installations here...
-
-# Sleep for 60 seconds
-sleep 60
 
 # Install kitty
 if ! command -v kitty &>/dev/null; then
